@@ -1,0 +1,70 @@
+//C# visual studio express 2010
+
+public partial class Form1 : Form
+    {
+
+        int dadosGas = 0;
+        int dadosAni = 0;
+        int upani = 0;
+        int upgas = 0;
+
+        public Form1()
+        {
+            InitializeComponent();
+
+            timer1.Enabled = true;
+            label5alerta.ForeColor = Color.Green;
+        }
+
+        void Calculo()
+        {
+
+            //dadosGas = Convert.ToInt32(numericUpDown1Gas.Text);
+            //dadosAni = Convert.ToInt32(numericUpDown2Ani.Text);
+            dadosGas = upgas;
+            dadosAni = upani;
+            progressBar1Gas.Value = dadosGas;
+            progressBar2Ani.Value = dadosAni;
+
+            int calc = (dadosAni + dadosGas) / 2;
+
+            label3ValorPorc.Text =  Convert.ToString(calc);
+            string s = String.Format("{0}%", calc);
+            label3ValorPorc.Text = s;
+
+            if (calc > 80) 
+            {
+                pictureBox2.Visible = true;
+                pictureBox1.Visible = false;
+                label5alerta.ForeColor = Color.Red;
+                label5alerta.Text = "Alerta! ";
+            }
+            else if (calc > 50) 
+            {
+                pictureBox2.Visible = true;
+                pictureBox1.Visible = false;
+                label5alerta.ForeColor = Color.Orange;
+                label5alerta.Text = "Atenção!";
+            }
+            else
+            {
+                pictureBox1.Visible = true;
+                pictureBox2.Visible = false;
+                label5alerta.ForeColor = Color.Black;
+                label5alerta.Text = "Normal ";
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Calculo();
+
+            if (upani < 90) upani += 2;
+            else if (upani < 100) upani++;
+
+            if (upgas < 65) upgas += 5;
+            else if (upgas < 80) upgas += 2;
+            else if (upgas < 90) upgas++;
+        }
+
+    }
